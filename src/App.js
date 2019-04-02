@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Toggle from './Toggle';
 
 // useState can only be used in function based components
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <div className="main-wrapper">
       <h1>Level Up Dishes</h1>
+      <Toggle />
       <h3>{name}</h3>
       <input type="text" onChange={e => setName(e.target.value)} value={name} />
     </div>
