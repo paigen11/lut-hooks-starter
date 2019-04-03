@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Toggle from './Toggle';
+import { useTitleInput } from './hooks/useTitleInput';
 
 // useState can only be used in function based components
 const App = () => {
   // the recipe for useState always
   // const [value, setValue] = useState(initialState);
-  const [name, setName] = useState('');
-
   // replacing a lot of things you'd be using lifecycle methods for
-  useEffect(() => {
-    document.title = name;
-  });
+
+  const [name, setName] = useTitleInput('');
 
   return (
     <div className="main-wrapper">
