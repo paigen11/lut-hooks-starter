@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef, createContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  createContext,
+  useMemo,
+} from 'react';
 import Toggle from './Toggle';
 import { useTitleInput } from './hooks/useTitleInput';
-import Counter from './Counter';
+// import Counter from './Counter';
 
 export const UserContext = createContext();
 
@@ -15,14 +21,28 @@ const App = () => {
   // way to reference a DOM node itself
   const ref = useRef();
 
+  const reverseWord = word => {
+    console.log('function called');
+    return word
+      .split('')
+      .reverse()
+      .join('');
+  };
+
+  const title = 'Level Up Dishes';
+
+  // when you define what you want to it to re-run on,
+  // the function won't rerender unless a specific thing it's watching changes
+  const TitleReversed = useMemo(() => reverseWord(name), [name]);
+
   return (
     <UserContext.Provider value={{ user: true }}>
       <div className="main-wrapper" ref={ref}>
         <h1 onClick={() => ref.current.classList.add('new-fake-class')} x>
-          Level Up Dishes
+          {TitleReversed}
         </h1>
         <Toggle />
-        <Counter />
+        {/* <Counter /> */}
         <form
           onSubmit={e => {
             e.preventDefault();
