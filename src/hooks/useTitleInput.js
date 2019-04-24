@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useDebugValue } from 'react';
 
 // hooks should always start with the word 'use'
 function useTitleInput(initialValue) {
@@ -7,6 +7,8 @@ function useTitleInput(initialValue) {
   useEffect(() => {
     document.title = value;
   });
+
+  useDebugValue(value.length > 0 ? 'Full' : 'Empty');
   return [value, setValue];
 }
 

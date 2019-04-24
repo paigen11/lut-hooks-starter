@@ -39,7 +39,7 @@ const App = () => {
     <UserContext.Provider value={{ user: true }}>
       <div className="main-wrapper" ref={ref}>
         <h1 onClick={() => ref.current.classList.add('new-fake-class')} x>
-          {TitleReversed}
+          {title}
         </h1>
         <Toggle />
         {/* <Counter /> */}
