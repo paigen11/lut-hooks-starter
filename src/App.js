@@ -31,6 +31,19 @@ const App = () => {
 
   const title = 'Level Up Dishes';
 
+  const [dishes, setDishes] = useState([]);
+
+  const fetchDishes = async () => {
+    const res = await fetch(
+      'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes',
+    );
+    const data = await res.json();
+    setDishes(data);
+  };
+  useEffect(() => {
+    fetchDishes();
+  }, []);
+
   // when you define what you want to it to re-run on,
   // the function won't rerender unless a specific thing it's watching changes
   const TitleReversed = useMemo(() => reverseWord(name), [name]);
@@ -55,6 +68,17 @@ const App = () => {
           />
           <button>Submit</button>
         </form>
+        {dishes.map(dish => (
+          <article className="dish-card dish-card--withImage">
+            <h3>{dish.name}</h3>
+            <p>{dish.desc}</p>
+            <div className="ingredients">
+              {dish.ingredients.map(ingredient => (
+                <span>{ingredient}</span>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
     </UserContext.Provider>
   );
