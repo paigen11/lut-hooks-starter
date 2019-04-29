@@ -34,12 +34,15 @@ const App = () => {
   const [dishes, setDishes] = useState([]);
 
   const fetchDishes = async () => {
+    console.log('I only ran on load');
     const res = await fetch(
       'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes',
     );
     const data = await res.json();
     setDishes(data);
   };
+
+  // the empty array at the end, means useEffect will run only on mount
   useEffect(() => {
     fetchDishes();
   }, []);
