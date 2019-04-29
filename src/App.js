@@ -42,10 +42,10 @@ const App = () => {
     setDishes(data);
   };
 
-  // the empty array at the end, means useEffect will run only on mount
+  // the array at the end, means useEffect will run only when the event specified happens
   useEffect(() => {
     fetchDishes();
-  }, []);
+  }, [name]);
 
   // when you define what you want to it to re-run on,
   // the function won't rerender unless a specific thing it's watching changes
