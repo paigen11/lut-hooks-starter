@@ -5,6 +5,8 @@ import React, {
   createContext,
   useMemo,
 } from 'react';
+import useAbortableFetch from 'use-abortable-fetch';
+import { useSpring, animated } from 'react-spring';
 import Toggle from './Toggle';
 import { useTitleInput } from './hooks/useTitleInput';
 // import Counter from './Counter';
@@ -20,6 +22,13 @@ const App = () => {
 
   // way to reference a DOM node itself
   const ref = useRef();
+
+  // one of many hook libraries for data fetching
+  // const { data = [], loading } = useAbortableFetch(
+  //   'https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes',
+  // );
+  // console.log(data);
+  // if (!data) return null;
 
   const reverseWord = word => {
     console.log('function called');
@@ -51,12 +60,18 @@ const App = () => {
   // the function won't rerender unless a specific thing it's watching changes
   const TitleReversed = useMemo(() => reverseWord(name), [name]);
 
+  const props = useSpring({ opacity: 1, from: { opacity: 0 } });
+  console.log('props ', props);
+
   return (
     <UserContext.Provider value={{ user: true }}>
       <div className="main-wrapper" ref={ref}>
-        <h1 onClick={() => ref.current.classList.add('new-fake-class')} x>
+        <animated.h1
+          style={props}
+          onClick={() => ref.current.classList.add('new-fake-class')}
+        >
           {title}
-        </h1>
+        </animated.h1>
         <Toggle />
         {/* <Counter /> */}
         <form
@@ -71,17 +86,18 @@ const App = () => {
           />
           <button>Submit</button>
         </form>
-        {dishes.map(dish => (
-          <article className="dish-card dish-card--withImage">
-            <h3>{dish.name}</h3>
-            <p>{dish.desc}</p>
-            <div className="ingredients">
-              {dish.ingredients.map(ingredient => (
-                <span>{ingredient}</span>
-              ))}
-            </div>
-          </article>
-        ))}
+        {dishes &&
+          dishes.map(dish => (
+            <article className="dish-card dish-card--withImage">
+              <h3>{dish.name}</h3>
+              <p>{dish.desc}</p>
+              <div className="ingredients">
+                {dish.ingredients.map(ingredient => (
+                  <span>{ingredient}</span>
+                ))}
+              </div>
+            </article>
+          ))}
       </div>
     </UserContext.Provider>
   );
